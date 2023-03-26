@@ -23,7 +23,7 @@ jobs:
         ports:
           - 9090:9090
         env:
-          initialBuckets: "content,ssr,templates,resources"
+          initialBuckets: "css"
 
     steps:
       - name: Check out code
