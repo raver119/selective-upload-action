@@ -1,0 +1,1 @@
+This folder contains GitHub Action for Statika. It allows file uploads as part of GitHub workflow.

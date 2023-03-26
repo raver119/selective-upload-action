@@ -1,0 +1,36 @@
+name: "Upload files to remote S3 server"
+description: "This action uploads files that match a given regex to the remote S3 server"
+branding:
+  color: "red"
+  icon: "box"
+inputs:
+  token:
+    description: "your Statika token"
+    required: true
+
+  storage:
+    description: "address of the remote Statika server. I.e.: https://remote:8080/bucket. Bucket is optional."
+    required: true
+
+  bucket:
+    description: "bucket where fields should be put. might be skipped, if storage field includes path argument."
+    required: false
+    default: ""
+
+  directory:
+    description: "directory with files to be uploaded"
+    required: true
+
+  regex:
+    description: "regular expression to filter files. Only matches will be uploaded."
+    required: false
+    default: ""
+
+  verbose:
+    description: "print various messages during the upload. either \"true\" or \"false\""
+    required: false
+    default: "false"
+
+runs:
+  using: "node12"
+  main: "dist/index.js"
