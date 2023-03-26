@@ -25,7 +25,7 @@ afterAll(() => {
 
 describe("Upload", () => {
   const client = new S3Client({
-    endpoint: `http://${process.env.S3_ENDPOINT ?? "localhost"}:9090`,
+    endpoint: process.env.S3_ENDPOINT ?? "http://localhost:9090",
     region: "any",
     credentials: {
       accessKeyId: uuid(),
