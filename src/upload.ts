@@ -9,6 +9,7 @@ export async function uploadAllFilesInFolder(
   client: S3Client,
   bucket: string,
   directory: string,
+  acl: string,
   prefix: string = "",
   regex: string = "",
   verbose: boolean = false
@@ -27,6 +28,7 @@ export async function uploadAllFilesInFolder(
     const command = new PutObjectCommand({
       Bucket: bucket,
       Key: `${prefix}${file}`,
+      ACL: acl,
       Body: content,
     })
 

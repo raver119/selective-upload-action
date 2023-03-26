@@ -9,6 +9,7 @@ async function run() {
   const region = core.getInput("region") ?? "us-east-1"
   const bucket = core.getInput("bucket")
   const prefix = core.getInput("prefix") ?? ""
+  const acl = core.getInput("acl") ?? "private"
   const pathStyle = core.getInput("path_style").toLowerCase() === "true"
 
   const directory = core.getInput("directory")
@@ -27,7 +28,7 @@ async function run() {
   })
 
   // upload all files to the remote S3 server
-  await uploadAllFilesInFolder(client, bucket, directory, prefix, regex, verbose)
+  await uploadAllFilesInFolder(client, bucket, directory, acl, prefix, regex, verbose)
 }
 
 // invoke action, fail if something's wrong
