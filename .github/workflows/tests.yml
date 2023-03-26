@@ -44,13 +44,15 @@ jobs:
         run: yarn build
 
       - name: Run tests
+        env:
+          S3_ENDPOINT: http://storage:9090
         run: yarn test
 
       # Use the action defined in this repository. kind of a
       - name: Run action locally
         uses: ./
         with:
-          endpoint: http://localhost:9090/
+          endpoint: http://storage:9090/
           key: access_key
           secret: secret_secret
           bucket: css
