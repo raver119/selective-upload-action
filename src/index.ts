@@ -9,6 +9,7 @@ async function run() {
   const region = core.getInput("region") ?? "us-east-1"
   const bucket = core.getInput("bucket")
   const prefix = core.getInput("prefix") ?? ""
+  const pathStyle = core.getInput("path_style").toLowerCase() === "true"
 
   const directory = core.getInput("directory")
   const regex = core.getInput("regex")
@@ -22,7 +23,7 @@ async function run() {
       accessKeyId: accessKey,
       secretAccessKey: secret,
     },
-    useFipsEndpoint: false,
+    forcePathStyle: pathStyle,
   })
 
   // upload all files to the remote S3 server

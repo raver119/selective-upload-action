@@ -69,6 +69,7 @@ function run() {
         const region = (_a = core.getInput("region")) !== null && _a !== void 0 ? _a : "us-east-1";
         const bucket = core.getInput("bucket");
         const prefix = (_b = core.getInput("prefix")) !== null && _b !== void 0 ? _b : "";
+        const pathStyle = core.getInput("path_style").toLowerCase() === "true";
         const directory = core.getInput("directory");
         const regex = core.getInput("regex");
         const verbose = core.getInput("verbose") === "true";
@@ -80,7 +81,7 @@ function run() {
                 accessKeyId: accessKey,
                 secretAccessKey: secret,
             },
-            useFipsEndpoint: false,
+            forcePathStyle: pathStyle,
         });
         // upload all files to the remote S3 server
         yield (0, upload_1.uploadAllFilesInFolder)(client, bucket, directory, prefix, regex, verbose);

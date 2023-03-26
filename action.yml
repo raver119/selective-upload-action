@@ -17,6 +17,11 @@ inputs:
     default: "us-east-1"
     required: false
 
+  path_style:
+    description: "Force S3 API to use path style. Default: true."
+    default: "true"
+    required: false
+
   endpoint:
     description: "address of the remote S3 server. I.e.: https://remote:8080"
     required: true
@@ -37,7 +42,7 @@ inputs:
   verbose:
     description: "print various messages during the upload. either \"true\" or \"false\""
     required: false
-    default: false
+    default: "false"
 
 runs:
   using: "node16"

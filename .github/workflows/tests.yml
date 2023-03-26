@@ -54,6 +54,7 @@ jobs:
           endpoint: http://storage:9090/
           key: access_key
           secret: secret_secret
+          path_style: true
           bucket: css
           directory: src/tests/
           verbose: true
