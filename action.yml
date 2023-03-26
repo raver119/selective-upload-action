@@ -12,6 +12,11 @@ inputs:
     description: "S3 secret key"
     required: true
 
+  acl:
+    description: "S3 ACL for the uploaded objects. Default: private."
+    default: "private"
+    required: false
+
   region:
     description: "S3 region"
     default: "us-east-1"
@@ -33,6 +38,11 @@ inputs:
   directory:
     description: "Directory with all the files to be uploaded"
     required: true
+
+  prefix:
+    description: "Prefix to be added to the destination file name. Default: none."
+    required: false
+    default: ""
 
   regex:
     description: "Regular expression to filter files. Only matches will be uploaded."

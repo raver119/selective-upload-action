@@ -61,7 +61,7 @@ const core = __importStar(__nccwpck_require__(42186));
 const upload_1 = __nccwpck_require__(64831);
 const client_s3_1 = __nccwpck_require__(19250);
 function run() {
-    var _a, _b;
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         const accessKey = core.getInput("key");
         const secret = core.getInput("secret");
@@ -69,6 +69,7 @@ function run() {
         const region = (_a = core.getInput("region")) !== null && _a !== void 0 ? _a : "us-east-1";
         const bucket = core.getInput("bucket");
         const prefix = (_b = core.getInput("prefix")) !== null && _b !== void 0 ? _b : "";
+        const acl = (_c = core.getInput("acl")) !== null && _c !== void 0 ? _c : "private";
         const pathStyle = core.getInput("path_style").toLowerCase() === "true";
         const directory = core.getInput("directory");
         const regex = core.getInput("regex");
@@ -84,7 +85,7 @@ function run() {
             forcePathStyle: pathStyle,
         });
         // upload all files to the remote S3 server
-        yield (0, upload_1.uploadAllFilesInFolder)(client, bucket, directory, prefix, regex, verbose);
+        yield (0, upload_1.uploadAllFilesInFolder)(client, bucket, directory, acl, prefix, regex, verbose);
     });
 }
 // invoke action, fail if something's wrong
@@ -217,7 +218,7 @@ __nccwpck_require__(50664);
 const filter_1 = __nccwpck_require__(73707);
 const scanner_1 = __nccwpck_require__(27118);
 const client_s3_1 = __nccwpck_require__(19250);
-function uploadAllFilesInFolder(client, bucket, directory, prefix = "", regex = "", verbose = false) {
+function uploadAllFilesInFolder(client, bucket, directory, acl, prefix = "", regex = "", verbose = false) {
     return __awaiter(this, void 0, void 0, function* () {
         // get list of files in the specified directory
         const files = (0, scanner_1.readDirectoryRecursively)(directory, verbose);
@@ -232,6 +233,7 @@ function uploadAllFilesInFolder(client, bucket, directory, prefix = "", regex = 
             const command = new client_s3_1.PutObjectCommand({
                 Bucket: bucket,
                 Key: `${prefix}${file}`,
+                ACL: acl,
                 Body: content,
             });
             const result = client.send(command);

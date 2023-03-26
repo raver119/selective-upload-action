@@ -34,11 +34,13 @@ describe("Upload", () => {
     forcePathStyle: true,
   })
 
-  test("partial upload", async () => {
+  test("partial upload no prefix", async () => {
     const bucketName = uuid()
     await expect(client.send(new CreateBucketCommand({Bucket: bucketName}))).resolves.toBeDefined()
 
-    await expect(uploadAllFilesInFolder(client, bucketName, tempDir, "", ".css$")).resolves.toStrictEqual(true)
+    await expect(uploadAllFilesInFolder(client, bucketName, tempDir, "private", "", ".css$")).resolves.toStrictEqual(
+      true
+    )
 
     // validate the upload
     const list = await client.send(new ListObjectsV2Command({Bucket: bucketName}))
@@ -49,11 +51,29 @@ describe("Upload", () => {
     }
   })
 
+  test("partial upload with prefix", async () => {
+    const bucketName = uuid()
+    await expect(client.send(new CreateBucketCommand({Bucket: bucketName}))).resolves.toBeDefined()
+
+    await expect(
+      uploadAllFilesInFolder(client, bucketName, tempDir, "private", "fancy/prefix/", ".css$")
+    ).resolves.toStrictEqual(true)
+
+    // validate the upload
+    const list = await client.send(new ListObjectsV2Command({Bucket: bucketName}))
+
+    expect(list.Contents?.length).toStrictEqual(7)
+    for (const obj of list.Contents ?? []) {
+      expect(obj.Key).toMatch(/\.css$/)
+      expect(obj.Key).toMatch(/^fancy\/prefix\//)
+    }
+  })
+
   test("upload everything", async () => {
     const bucketName = uuid()
     await expect(client.send(new CreateBucketCommand({Bucket: bucketName}))).resolves.toBeDefined()
 
-    await expect(uploadAllFilesInFolder(client, bucketName, tempDir, "", "")).resolves.toStrictEqual(true)
+    await expect(uploadAllFilesInFolder(client, bucketName, tempDir, "public", "", "")).resolves.toStrictEqual(true)
 
     const list = await client.send(new ListObjectsV2Command({Bucket: bucketName}))
 
