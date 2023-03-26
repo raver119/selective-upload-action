@@ -22,6 +22,7 @@ async function run() {
       accessKeyId: accessKey,
       secretAccessKey: secret,
     },
+    useFipsEndpoint: false,
   })
 
   // upload all files to the remote S3 server

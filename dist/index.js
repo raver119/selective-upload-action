@@ -80,6 +80,7 @@ function run() {
                 accessKeyId: accessKey,
                 secretAccessKey: secret,
             },
+            useFipsEndpoint: false,
         });
         // upload all files to the remote S3 server
         yield (0, upload_1.uploadAllFilesInFolder)(client, bucket, directory, prefix, regex, verbose);
