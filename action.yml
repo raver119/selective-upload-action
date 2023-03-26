@@ -14,6 +14,7 @@ inputs:
 
   region:
     description: "S3 region"
+    default: "us-east-1"
     required: false
 
   endpoint:
