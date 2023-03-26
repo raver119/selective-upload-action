@@ -21,8 +21,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
         ports:
-          - 9090/tcp
-          - 9091/tcp
+          - 9090:9090
         env:
           initialBuckets: "content,ssr,templates,resources"
 
@@ -45,7 +44,7 @@ jobs:
 
       - name: Run tests
         env:
-          S3_ENDPOINT: http://storage:9090
+          S3_ENDPOINT: http://localhost:9090
         run: yarn test
 
       # Use the action defined in this repository. kind of a
